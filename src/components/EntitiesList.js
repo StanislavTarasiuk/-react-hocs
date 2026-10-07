@@ -1,18 +1,10 @@
-import { useState, useEffect } from 'react'
+import withLoading from './withLoading'
 
+function EntitiesList({ data, propsToDisplay, onEntityDetailsClick }) {
 
-function EntitiesList({ onEntityDetailsClick, propsToDisplay, fetchMethod }) {
-  const [entities, setEntities] = useState(null)
-
-  useEffect(() => {
-    fetchMethod()
-      .then(res => setEntities(res))
-  }, [])
-
-  return (
-    entities ?
+return (
       <ul>
-        {entities.map(entity =>
+        {data.map(entity =>
           <li key={entity.id}>
             <button onClick={() => onEntityDetailsClick(entity.id)}>👀</button>
             {Object.entries(propsToDisplay).map(entry =>
@@ -20,8 +12,8 @@ function EntitiesList({ onEntityDetailsClick, propsToDisplay, fetchMethod }) {
             )}
           </li>
         )}
-      </ul> : <p className='center'>Loading...</p>
+      </ul>
   )
 }
 
-export default EntitiesList
+export default withLoading(EntitiesList)
