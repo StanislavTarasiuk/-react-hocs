@@ -9,7 +9,7 @@ function withLoading(Component) {
 
             fetchMethod(params)
                 .then(res => setData(res))
-        }, [params])
+        }, [fetchMethod, params])
         const { fetchMethod: _, params: __, ...restProps } = props
         if (!data) {
             return <p>Loading...</p>

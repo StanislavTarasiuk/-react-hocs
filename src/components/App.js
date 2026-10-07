@@ -5,24 +5,25 @@ import EntityDetails from './EntityDetails';
 import { fetchUsers, fetchUser } from '../api';
 
 function App() {
-  const [userId, setUserId] = useState(1)
-  const onUserClick = (id) => setUserId(id);
+  const [selectedEntity, setSelectedEntity] = useState(null)
 
   return (
     <div>
       <EntitiesList
-        onEntityDetailsClick={onUserClick}
+        onEntityDetailsClick={setSelectedEntity}
         fetchMethod={fetchUsers}
         propsToDisplay={{ name: 'Name', username: 'Username', email: 'Email' }} />
-      <EntityDetails
-        fetchMethod={fetchUser}
-        params={userId}
-        propsToDisplay={{
-          name: 'Name', username: 'Username', email: 'Email',
-          address: 'Address', city: 'City', street: 'Street', suite: 'Apartments',
-          phone: 'Phone'
-        }}
-      />
+      {selectedEntity && (
+        <EntityDetails
+          fetchMethod={fetchUser}
+          params={selectedEntity}
+          propsToDisplay={{
+            name: 'Name', username: 'Username', email: 'Email',
+            address: 'Address', city: 'City', street: 'Street', suite: 'Apartments',
+            phone: 'Phone'
+          }}
+        />
+      )}
     </div>
   );
 }
